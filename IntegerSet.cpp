@@ -17,34 +17,44 @@ IntegerSet::IntegerSet(int size)
 		*(intSet + i) = 0;
 	}
 }
-IntegerSet IntegerSet::unionOfSets(IntegerSet* compareSet) const
+IntegerSet::IntegerSet(int* arr, int size)
+{
+	intSet = new int[size];
+	setSize = size;
+	for (int i = 0; i < setSize; i++)
+	{
+		*(intSet + i) = *(arr + i);
+	}
+}
+IntegerSet* IntegerSet::unionOfSets(IntegerSet* compareSet, IntegerSet* unionSet)
 {
 	//first compare the sets and start creating new set with both values
-	IntegerSet combinedSet(setSize);
-	IntegerSet *setPtr = nullptr;
-	setPtr = &combinedSet;
+	//IntegerSet combinedSet(setSize);
+	//IntegerSet *setPtr = nullptr;
+	//setPtr = &combinedSet;
 	for (int i = 0; i < setSize; i++)
 	{
 		if (*(intSet + i) == 1 || compareSet->intSet[i] == 1)
 		{
-			setPtr->intSet[i] = 1;
+			unionSet->intSet[i] = 1;
 		}
 	}
-	return combinedSet;
+	return unionSet;
 }
-IntegerSet IntegerSet::intersectionOfSets(IntegerSet* compareSet) const
+IntegerSet* IntegerSet::intersectionOfSets(IntegerSet* compareSet, IntegerSet* interSet)
 {
-	IntegerSet combinedSet(setSize);
-	IntegerSet *setPtr = nullptr;
-	setPtr = &combinedSet;
+	//IntegerSet combinedSet(setSize);
+	//IntegerSet *setPtr = nullptr;
+	//setPtr = &combinedSet;
 	for (int i = 0; i < setSize; i++)
 	{
 		if (*(intSet + i) == 1 && compareSet->intSet[i] == 1)
 		{
-			setPtr->intSet[i] = 1;
+			interSet->intSet[i] = 1;
+			//cout << "ASDASD";
 		}
 	}
-	return combinedSet;
+	return interSet;
 }
 bool IntegerSet::insertElement(int k)
 {
@@ -92,7 +102,7 @@ void IntegerSet::printSet() const
 	}
 	cout << endl;
 }
-bool IntegerSet::isEqual(IntegerSet* compareSet) const
+bool IntegerSet::isEqual(IntegerSet* compareSet)
 //argument is pointer so that you can use the structure pointer operator, ->, to call
 //the member variable of the argument
 {

@@ -42,12 +42,13 @@ class IntegerSet
 
 	public:
 		IntegerSet(int);
+		IntegerSet(int*, int);
 		~IntegerSet();
-		IntegerSet unionOfSets(IntegerSet);
-		IntegerSet intersectionOfSets(IntegerSet);
+		IntegerSet* unionOfSets(IntegerSet*,IntegerSet*);
+		IntegerSet* intersectionOfSets(IntegerSet*,IntegerSet*);
 		bool insertElement(int);
 		void printSet() const;
 		bool deleteElement(int);
-		bool isEqual(IntegerSet*) const;
+		bool isEqual(IntegerSet*);
 };
 #endif
