@@ -4,124 +4,105 @@ Jonah Moon
 CS 137
 Homework 2
 */
+
 #include "IntegerSet.h"
 #include <iostream>
 using namespace std;
 
 IntegerSet::IntegerSet(int size)
 {
-	intSet = new int[size];// +1 ??
-	setSize = size;
-	for (int i = 0; i < size; i++)
-	{
-		*(intSet + i) = 0;
-	}
-}
-IntegerSet::IntegerSet(int* arr, int size)
-{
 	intSet = new int[size];
 	setSize = size;
-	for (int i = 0; i < setSize; i++)
+	for (int counter = 0; counter < size; ++counter)
 	{
-		*(intSet + i) = *(arr + i);
+		intSet[counter] = 0;
 	}
 }
-IntegerSet* IntegerSet::unionOfSets(IntegerSet* compareSet, IntegerSet* unionSet)
+
+IntegerSet::IntegerSet(const int *array, const int arraySize)
 {
-	//first compare the sets and start creating new set with both values
-	//IntegerSet combinedSet(setSize);
-	//IntegerSet *setPtr = nullptr;
-	//setPtr = &combinedSet;
-	for (int i = 0; i < setSize; i++)
+	for (int counter = 0; counter < arraySize; ++counter)
 	{
-		if (*(intSet + i) == 1 || compareSet->intSet[i] == 1)
-		{
-			unionSet->intSet[i] = 1;
-		}
+		intSet[counter] = array[counter];
 	}
-	return unionSet;
 }
-IntegerSet* IntegerSet::intersectionOfSets(IntegerSet* compareSet, IntegerSet* interSet)
+
+IntegerSet IntegerSet::unionOfSets(IntegerSet *anotherSet) const
 {
-	//IntegerSet combinedSet(setSize);
-	//IntegerSet *setPtr = nullptr;
-	//setPtr = &combinedSet;
-	for (int i = 0; i < setSize; i++)
+	for (int counter = 0; counter < setSize; ++counter)
 	{
-		if (*(intSet + i) == 1 && compareSet->intSet[i] == 1)
+		if (intSet[counter] == 1 || anotherSet->intSet[counter] == 1)
 		{
-			interSet->intSet[i] = 1;
-			//cout << "ASDASD";
-		}
-	}
-	return interSet;
-}
-bool IntegerSet::insertElement(int k)
-{
-	bool status;
-	if (*(intSet + k) == 0)
-	{
-		intSet[k] = 1;
-		status = true;
-	}
-	else
-	{
-		status = false;
-	}
-	return status;
-}
-bool IntegerSet::deleteElement(int k)
-{
-	bool status;
-	if (k > setSize)
-	{
-		status = false;
-	}
-	else if (k <= setSize)
-	{
-		if (*(intSet + k) == 1)
-		{
-			*(intSet + k) = 0;
-			status = true;
-		}
-		else if (*(intSet + k) == 0)
-		{
-			status = false;
-		}
-	}
-	return status;
-}
-void IntegerSet::printSet() const
-{
-	for (int i = 0; i < setSize; i++)
-	{
-		if (*(intSet + i) == 1)
-		{
-			cout << i << " ";
-		}
-	}
-	cout << endl;
-}
-bool IntegerSet::isEqual(IntegerSet* compareSet)
-//argument is pointer so that you can use the structure pointer operator, ->, to call
-//the member variable of the argument
-{
-	//IntegerSet *setPtr = nullptr;
-	//setPtr = &compareSet;
-	bool status;
-	for (int i = 0; i < setSize; i++)
-	{
-		if (*(intSet + i) == compareSet->intSet[i])
-		{
-			status = true;
+			intSet[counter] = 1;
 		}
 		else
 		{
-			status = false;
 		}
 	}
-	return status;
+	return *intSet;
 }
+
+// In the following function, I changed the values in the intSet array rather than creating a whole new array in order to see all of the changes when I use printSet().
+IntegerSet IntegerSet::intersectionOfSets(IntegerSet *anotherSet) const
+{
+	for (int counter = 0; counter < setSize; ++counter)
+	{
+		if (intSet[counter] == 1 && anotherSet->intSet[counter] == 1)
+			intSet[counter] = 1;
+
+		else 
+			intSet[counter] = 0;
+	}
+	return *intSet;
+}
+
+bool IntegerSet::insertElement(int k)
+{
+	if (k >= 0 && k <= setSize)
+	{
+		intSet[k] = 1;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool IntegerSet::deleteElement(int m)
+{
+	if (m >= 0 && m <= setSize)
+	{
+		intSet[m] = 0;
+		return true;
+	}
+	else
+		return false;
+}
+
+void IntegerSet::printSet()
+{
+	for (int counter = 0; counter < setSize; ++counter)
+	{
+		if (intSet[counter] == 1)
+			cout << counter << " ";
+		else
+			cout << "--";
+	}
+	cout << endl;
+}
+
+bool IntegerSet::isEqual(IntegerSet *anotherSet) const
+{
+	for (int counter = 0; counter < setSize; ++counter)
+	{
+		if (intSet[counter] == anotherSet->intSet[counter])
+			return true;
+		else
+			return false;
+	}
+}
+
 IntegerSet::~IntegerSet()
 {
 	delete[] intSet;
