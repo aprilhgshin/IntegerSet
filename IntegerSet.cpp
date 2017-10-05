@@ -28,8 +28,8 @@ IntegerSet::IntegerSet(int *array, int arraySize)
 IntegerSet* IntegerSet::unionOfSets(IntegerSet *anotherSet) const
 {
 	IntegerSet *combinedUSet;							  /* a pointer to an IntegerSet, which I will 
-														     then use the pointer to dynamically allocate 
-															 an object of the IntegerSet class */
+														then use the pointer to dynamically allocate 
+													an object of the IntegerSet class */
 	combinedUSet = new IntegerSet(anotherSet->setSize);	  // size for each instance can be different
 
 	for (int counter = 0; counter < setSize; ++counter)
