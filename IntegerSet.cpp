@@ -1,9 +1,7 @@
-/*
-April Shin
-Jonah Moon
-CS 137
-Homework 2
-*/
+//April Shin
+//Jonah Moon
+//CSIS 137 Wed Night Class
+//Homework #2
 
 #include "IntegerSet.h"
 #include <iostream>

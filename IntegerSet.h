@@ -1,3 +1,8 @@
+//April Shin
+//Jonah Moon
+//CSIS 137 Wed Night Class
+//Homework #2
+
 #pragma once
 #define INTEGERSET_H
 
