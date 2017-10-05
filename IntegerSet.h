@@ -9,10 +9,10 @@ private:
 
 public:
 	IntegerSet(int);
-	IntegerSet(const int *, const int);
+	IntegerSet(int *, int);
 	~IntegerSet();
-	IntegerSet unionOfSets(IntegerSet *) const;
-	IntegerSet intersectionOfSets(IntegerSet *) const;
+	IntegerSet* unionOfSets(IntegerSet *) const;
+	IntegerSet* intersectionOfSets(IntegerSet *) const;
 	bool insertElement(int);
 	bool deleteElement(int);
 	void printSet();

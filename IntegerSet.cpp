@@ -19,7 +19,7 @@ IntegerSet::IntegerSet(int size)
 	}
 }
 
-IntegerSet::IntegerSet(const int *array, const int arraySize)
+IntegerSet::IntegerSet(int *array, int arraySize)
 {
 	for (int counter = 0; counter < arraySize; ++counter)
 	{
@@ -27,33 +27,43 @@ IntegerSet::IntegerSet(const int *array, const int arraySize)
 	}
 }
 
-IntegerSet IntegerSet::unionOfSets(IntegerSet *anotherSet) const
+IntegerSet* IntegerSet::unionOfSets(IntegerSet *anotherSet) const
 {
+	IntegerSet *combinedUSet;							  // a pointer to an IntegerSet, which I will then use the pointer to dynamically allocate an object of the IntegerSet class
+	combinedUSet = new IntegerSet(anotherSet->setSize);	  // size for each instance can be different
+
 	for (int counter = 0; counter < setSize; ++counter)
 	{
 		if (intSet[counter] == 1 || anotherSet->intSet[counter] == 1)
 		{
-			intSet[counter] = 1;
+			combinedUSet->intSet[counter] = 1;
 		}
 		else
 		{
+			combinedUSet->intSet[counter] = 0;
 		}
 	}
-	return *intSet;
+	// combinedUSet->printSet();      For testing
+	return combinedUSet;
+	delete[] combinedUSet;
 }
 
-// In the following function, I changed the values in the intSet array rather than creating a whole new array in order to see all of the changes when I use printSet().
-IntegerSet IntegerSet::intersectionOfSets(IntegerSet *anotherSet) const
+IntegerSet* IntegerSet::intersectionOfSets(IntegerSet *anotherSet) const
 {
+	IntegerSet *combinedISet;							  
+	combinedISet = new IntegerSet(anotherSet->setSize);	  
+
 	for (int counter = 0; counter < setSize; ++counter)
 	{
 		if (intSet[counter] == 1 && anotherSet->intSet[counter] == 1)
-			intSet[counter] = 1;
+			combinedISet[counter] = 1;
 
 		else 
 			intSet[counter] = 0;
 	}
-	return *intSet;
+	//combinedISet->printSet();		For testing
+	return combinedISet;
+	delete[] combinedISet;
 }
 
 bool IntegerSet::insertElement(int k)
@@ -85,21 +95,33 @@ void IntegerSet::printSet()
 	for (int counter = 0; counter < setSize; ++counter)
 	{
 		if (intSet[counter] == 1)
-			cout << counter << " ";
+			cout << " " << counter;
 		else
-			cout << "--";
+			cout << " --";
 	}
 	cout << endl;
 }
 
 bool IntegerSet::isEqual(IntegerSet *anotherSet) const
 {
+	int totalOnes = 0;
 	for (int counter = 0; counter < setSize; ++counter)
 	{
 		if (intSet[counter] == anotherSet->intSet[counter])
-			return true;
-		else
-			return false;
+		{
+			++totalOnes;
+		}
+		else 
+		{
+		}
+	}
+	if (totalOnes == setSize)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -107,3 +129,4 @@ IntegerSet::~IntegerSet()
 {
 	delete[] intSet;
 }
+
